@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Product;
+<head>
+    <style>
+        body{
+            background-color:aliceblue;
+        }
+    </style>
+</head>
+<div>
+    <h2 class="text-center mb-5 " style="color:red;font-size:25px">Bu Urunu Silmek Istediginize Eminmisiniz?</h2>
+</div>
+<table class="table" >
+<thead>
+    <tr>
+        <th class="th">ID</th>
+        <th class="th">Urun Adi</th>
+        <th class="th">Marka</th>
+        <th class="th">Kategori</th>
+        <th class="th">Fiyat</th>
+        <th class="th">Urun Gorseli</th>
+        <th class="th">Urun Tarihi</th>
+        <th class="th">Kontrol Grubu</th>
+    </tr>
+</thead>
+<tbody style="background-color:aliceblue;" id="tb">
+    
+        <tr>
+        <td>@Model.Id</td>
+        <td>@Model.Name</td>
+        <td>@Model.Brand</td>
+        <td>@Model.Category</td>
+        <td>@(Model.Price)₺</td>
+        <td><img src="/UrunResimleri/@Model.ImageFileName" width="100" /></td>
+        <td>@Model.CreatedAt.ToString("MM/dd/yyyy")</td>
+            <td style="white-space:nowrap">
+
+                <a class="btn btn-danger   btn-sm" asp-controller="Products" asp-action="Sil"
+                   asp-route-id="@Model.Id">Sil</a>
+                <a class="btn btn-success   btn-sm" asp-controller="Products" asp-action="Index"
+                   asp-route-id="@Model.Id">Vazgec</a>
+
+            </td>
+        </tr>
+ 
+
+</tbody>
+
+</table>

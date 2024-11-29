@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperElectronic", "SuperElectronic\SuperElectronic.csproj", "{AB92DF36-FD4D-4781-9B26-9B2A84769CBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB92DF36-FD4D-4781-9B26-9B2A84769CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB92DF36-FD4D-4781-9B26-9B2A84769CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB92DF36-FD4D-4781-9B26-9B2A84769CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB92DF36-FD4D-4781-9B26-9B2A84769CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F7AAA6E-9A22-4653-80B1-7D68692DD50E}
+	EndGlobalSection
+EndGlobal

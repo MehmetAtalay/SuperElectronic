@@ -1,0 +1,116 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ProductDTO
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SuperElectronic.styles.css" asp-append-version="true" />
+    <style>
+        body{
+            background-color:azure;
+        }
+    </style>
+</head>
+<div class="row">
+    @* column , center borderi rounded text centerda olsun bottom marginide m-5 olsun paddingide p-3 *@
+    <div class="col-md-8 mx-auto rounded border p-3">
+        <h2 class="text-center mb-5">Detay </h2>
+
+        @* enctype multipart/form data kullandim resimde eklencegi icin*@
+        <form method="post" enctype="multipart/form-data">
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Id</label>
+                <div class="col-sm-8">
+                    <input class="form-control-plaintext" readonly value="@ViewData["ProductId"]">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Isim</label>
+                <div class="col-sm-8">
+                    <input class="form" asp-for="Name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Marka</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Brand">
+                    <span asp-validation-for="Brand" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Fiyat</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Price">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Aciklama</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" asp-for="Description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="offset-sm-4 col-sm-8">
+                    <img src="/UrunResimleri/@ViewData["ImageFileName"]" width="150" />
+                </div>
+
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Image</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="ImageFile">
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Olusturulma Tarihi</label>
+                <div class="col-sm-8">
+                    <input class="form-control-plaintext" readonly value="@ViewData["CreatedAt"]">
+                </div>
+            </div><div class="row">
+                
+                <div class="col-sm-4 d-grid">
+                    @*Cancel Buttonuna tikladigimizda bizi  direk indexe aticak*@
+                    <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Index" role="button">
+                        Geri Don
+                    </a>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+@*Bu scriptler direk hazir geliyo mvc projesi actigimizda , bu sekilde kullandigimda modele girilen
+    verinin dogrulugunu once client tarafinda bir kere kontrol ettikten sonra eger dogru sekilde
+    girildeyse servere  yolluyorum. Ordada model tarafinda zaten ayni kontroller yapiliyor.(ve fazlasi)
+    Fakat once client tarafinda yapmamin sebebi , confirm form resubmission uyarisi yememek.
+    Cunku biz bir sayfayi refresh ettigimizde ornegin f5 ile o sayfadaki post methodu tekrar servera
+    bir istek olarak yollanir. Buda istenmeyen requestlere sebeb olabilir.
+*@
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+@*BUttonlara Bu sayfada gerek yok
+
+*@
+@* <div class="row">
+    <div class="offset-sm-4 col-sm-4 d-grid">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <div class="col-sm-4 d-grid">
+        @*Cancel Buttonuna tikladigimizda bizi  direk indexe aticak*@
+@* <a class="btn btn-outline-primary" asp-controller="Products" asp-action="Index" role="button">
+            Cancel
+        </a>
+    </div>
+</div>  *@
