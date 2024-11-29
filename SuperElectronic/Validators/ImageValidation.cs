@@ -7,7 +7,7 @@ namespace SuperElectronic.Validators
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            //Regex ile name kismina sadece sayi yazilip yazilmadigina baktim ,  donen cevabi isNumbera atadim.
+           
             if (value == null)
             {
                 return new ValidationResult("Bos birakamazsiniz");
