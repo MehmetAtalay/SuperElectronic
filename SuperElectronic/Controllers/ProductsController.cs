@@ -10,6 +10,7 @@ namespace SuperElectronic.Controllers
     {
         private readonly SuperElectronicDbContext _dbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly int pageSize = 5;
 
         public ProductsController(SuperElectronicDbContext dbContext,
             IWebHostEnvironment webHostEnvironment)
@@ -19,18 +20,30 @@ namespace SuperElectronic.Controllers
 
         }
         //Urunleri Listeleyen action
-        public async Task<IActionResult> Index(string? ara)
+        public async Task<IActionResult> Index(int pageIndex,string? ara)
         {
             // Order By Descending Yaptimki En son Eklenen Urun en Ustte gozuksun
-            var products = await _dbContext.Products.OrderByDescending(p => p.Id).ToListAsync();
-            var products2 = await _dbContext.Products.ToListAsync();
-            
-            //Null deilse viewdataya atcaz nullsa bos bir string eklicez
-            if (!String.IsNullOrEmpty(ara))
+            IQueryable<Product> query = _dbContext.Products;
+            if (ara != null)
             {
-                products2 = products2.Where(x => x.Name.ToLower().Contains(ara)).ToList();
-                return View(products2);
+                query = query.Where(p =>p.Name.ToLower().Contains(ara));
             }
+            query = query.OrderByDescending(p=>p.Id);
+            //Pagination
+            if(pageIndex < 1)
+            {
+                pageIndex = 1;
+            }
+            decimal count = query.Count();
+            //ToplamSayfa bulmak icin countu page sizea bolduk math ceilingle ona en yakin
+            //sayiyi atadik totalpagese
+            int totalPages =(int) Math.Ceiling(count / pageSize);
+            query = query.Skip((pageIndex-1)*pageSize).Take(pageSize);
+            var products = await query.ToListAsync();
+            ViewData["PageIndex"] = pageIndex;
+            ViewData["TotalPages"] = totalPages;
+            //Null deilse viewdataya atcaz nullsa bos bir string eklicez
+         
             ViewData["Ara"] = ara ?? "";
             return View(products);
            
@@ -57,6 +70,7 @@ namespace SuperElectronic.Controllers
             // gercekten image olduguna dairde bir validasyon atarim.
             if (productDTO.ImageFile == null)
             {
+                
                 ModelState.AddModelError("ImageFile", "Bir resim yukleyiniz lutfen");
             }
             if (!ModelState.IsValid)

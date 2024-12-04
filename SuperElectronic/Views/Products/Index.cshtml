@@ -1,8 +1,9 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Urunler";
     Layout = "~/Views/Shared/_UrunlerLayout.cshtml";
     string ara = (string)ViewData["Ara"]!;
+    int pageIndex = (int)ViewData["PageIndex"]!;
+    int totalPages = (int)ViewData["TotalPages"]!; 
 }
 @*Layotu deistirdim cunku istemiyorum navbar urunler gozuksun burda*@
 @model List<Product>
@@ -14,29 +15,29 @@
             background-image: url('/UrunResimleri/dukkanresmi.jpg');
             background-size: cover;
             background-position: center;
+            
         }
 
         tbody {
             opacity: 0.95;
-        } 
+        }
 
-       /*   #tb{
-                background-image:url('/UrunResimleri/tableArkaPlan.jpg');
-                background-size:cover;
-                background-position:center;
-                opacity: 1.0;
-            } */
-      .th {
+        /*   #tb{
+                        background-image:url('/UrunResimleri/tableArkaPlan.jpg');
+                        background-size:cover;
+                        background-position:center;
+                        opacity: 1.0;
+                    } */
+        .th {
             height: auto;
             margin: auto;
-           
             background-color: orange;
-           
             font-size: 18px;
             color: indianred;
         }
-        #search{
-            opacity:1;
+
+        #search {
+            opacity: 1;
         }
     </style>
 
@@ -52,53 +53,70 @@
         <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Urun Ekle</a>
     </div>
     <div class="col">
-        <form asp-controller="Products" asp-action="Index" method="get">
-            <div class="col-6">
-                <a class="btn btn-primary" asp-controller="Products" asp-action="Index">Urunlere Geri Don</a>
-            <button class="btn btn-outline-success my-2 my-sm-0" id="search" type="submit">Ara</button>
-            <input class="form-control mr-sm-2" type="search" name="ara" value="@ara" placeholder="Urun Ismiyle Ara" aria-label="Search">
-            </div>
+         <form asp-controller="Products" asp-action="Index" method="get">
+        <div class="col-6">
+        <a class="btn btn-primary" asp-controller="Products" asp-action="Index">Urunlere Geri Don</a>
+        <button class="btn btn-outline-success my-2 my-sm-0" id="search" type="submit">Ara</button>
+        <input class="form-control mr-sm-2" type="search" name="ara" value="@ara" placeholder="Urun Ismiyle Ara" aria-label="Search">
+        </div>
         </form>
     </div>
 </div>
 <div class="container-fluid">
-<table class="table" >
-    <thead>
-    <tr>
-            <th class="th">ID</th>
-            <th class="th">Urun Adi</th>
-            <th class="th">Marka</th>
-            <th class="th">Kategori</th>
-            <th class="th">Fiyat</th>
-            <th class="th">Urun Gorseli</th>
-            <th class="th">Urun Tarihi</th>
-            <th class="th">Kontrol Grubu</th>
-    </tr>
-    </thead>
-    <tbody style="background-color:aliceblue;" id="tb">
-        @foreach (var product in Model)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>@product.Id</td>
-                <td>@product.Name</td>
-                <td>@product.Brand</td>
-                <td>@product.Category</td>
-                <td>@(product.Price)₺</td>
-                <td><img src="/UrunResimleri/@product.ImageFileName" width="100" /></td>
-                <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
-                <td style="flex-wrap:wrap" >
-                    <a class="btn btn-primary btn-sm" asp-controller="Products" asp-action="Duzenle"
-                       asp-route-id="@product.Id">Guncelle</a>
-                
-                    
-                    <a class="btn btn-danger   btn-sm" asp-controller="Products" asp-action="SilmeSayfasi"
-                       asp-route-id="@product.Id">Sil</a>
-                    
-                </td>
+                <th class="th">ID</th>
+                <th class="th">Urun Adi</th>
+                <th class="th">Marka</th>
+                <th class="th">Kategori</th>
+                <th class="th">Fiyat</th>
+                <th class="th">Urun Gorseli</th>
+                <th class="th">Urun Tarihi</th>
+                <th class="th">Kontrol Grubu</th>
             </tr>
-        }
+        </thead>
+        <tbody style="background-color:aliceblue;" id="tb">
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Brand</td>
+                    <td>@product.Category</td>
+                    <td>@(product.Price)₺</td>
+                    <td><img src="/UrunResimleri/@product.ImageFileName" width="100" /></td>
+                    <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+                    <td style="flex-wrap:wrap">
+                        <a class="btn btn-primary btn-sm" asp-controller="Products" asp-action="Duzenle"
+                           asp-route-id="@product.Id">Guncelle</a>
 
-    </tbody>
 
-</table>
+                        <a class="btn btn-danger   btn-sm" asp-controller="Products" asp-action="SilmeSayfasi"
+                           asp-route-id="@product.Id">Sil</a>
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
 </div>
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            //PageIndex routesi i de gelen deger Controllerin icindeki pageIndex degerini
+            //Burda i olarak gondermis olduk Controllerin Icindeki Indexe
+            string active = "";
+            //Su anki sayfa i ye esitse
+            if(i == pageIndex)
+            {
+                active = "active";
+            }
+            <li class="page-item @active"><a class="page-link" asp-route-pageIndex="@i"
+                   asp-route-ara="@ara">@i</a></li>
+        }
+    </ul>
+</nav>

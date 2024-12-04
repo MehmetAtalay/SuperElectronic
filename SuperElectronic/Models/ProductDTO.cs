@@ -20,7 +20,7 @@ namespace SuperElectronic.Models
         //Description
         //ImageFile
 
-
+        Product product = new Product();
         //IDyi almadim cunku ID otomatik olusturulcak sql tarafinda kendisi unique bir id atiycak
         //[Required(ErrorMessage ="Bu alan bos birakilamaz")]
         [Required(ErrorMessage ="Lutfen isim alanini bos birakmayiniz")]

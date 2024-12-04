@@ -10,6 +10,7 @@ namespace SuperElectronic.Validators
            
             if (value == null)
             {
+                
                 return new ValidationResult("Bos birakamazsiniz");
             }
             var isImage = IsFileValid((IFormFile)value!);
