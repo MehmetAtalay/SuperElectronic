@@ -1,9 +1,26 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Html
+@{
     ViewData["Title"] = "Urunler";
     Layout = "~/Views/Shared/_UrunlerLayout.cshtml";
     string ara = (string)ViewData["Ara"]!;
     int pageIndex = (int)ViewData["PageIndex"]!;
-    int totalPages = (int)ViewData["TotalPages"]!; 
+    int totalPages = (int)ViewData["TotalPages"]!;
+    string column = (string)ViewData["Column"]!;
+    string orderBy = (string)ViewData["OrderBy"]!;
+    HtmlString getArrow(string tableColumn)
+    {
+        if (tableColumn != column)
+        {
+            return new HtmlString("");
+        }
+        if (orderBy == "desc")
+        {
+            return new HtmlString("&darr;");
+        }
+
+        return new HtmlString("&uarr;");
+
+    }
 }
 @*Layotu deistirdim cunku istemiyorum navbar urunler gozuksun burda*@
 @model List<Product>
@@ -15,7 +32,6 @@
             background-image: url('/UrunResimleri/dukkanresmi.jpg');
             background-size: cover;
             background-position: center;
-            
         }
 
         tbody {
@@ -23,11 +39,11 @@
         }
 
         /*   #tb{
-                        background-image:url('/UrunResimleri/tableArkaPlan.jpg');
-                        background-size:cover;
-                        background-position:center;
-                        opacity: 1.0;
-                    } */
+                                background-image:url('/UrunResimleri/tableArkaPlan.jpg');
+                                background-size:cover;
+                                background-position:center;
+                                opacity: 1.0;
+                            } */
         .th {
             height: auto;
             margin: auto;
@@ -40,6 +56,18 @@
             opacity: 1;
         }
     </style>
+    <script>
+        function sortTable(column) {
+            let orderBy = "desc"
+            let currentColumn = "@column";
+            let currentOrder = "@orderBy";
+            if (column === currentColumn) {
+                if (currentOrder == "asc") orderBy = "desc";
+                else orderBy = "asc";
+            }
+            window.location.href = "?search=@(ara)&column=" + column + "&orderBy=" + orderBy
+        }
+    </script>
 
 </head>
 
@@ -53,12 +81,12 @@
         <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Urun Ekle</a>
     </div>
     <div class="col">
-         <form asp-controller="Products" asp-action="Index" method="get">
-        <div class="col-6">
-        <a class="btn btn-primary" asp-controller="Products" asp-action="Index">Urunlere Geri Don</a>
-        <button class="btn btn-outline-success my-2 my-sm-0" id="search" type="submit">Ara</button>
-        <input class="form-control mr-sm-2" type="search" name="ara" value="@ara" placeholder="Urun Ismiyle Ara" aria-label="Search">
-        </div>
+        <form asp-controller="Products" asp-action="Index" method="get">
+            <div class="col-6">
+                <a class="btn btn-primary" asp-controller="Products" asp-action="Index">Urunlere Geri Don</a>
+                <button class="btn btn-outline-success my-2 my-sm-0" id="search" type="submit">Ara</button>
+                <input class="form-control mr-sm-2" type="search" name="ara" value="@ara" placeholder="Urun Ismiyle Ara" aria-label="Search">
+            </div>
         </form>
     </div>
 </div>
@@ -66,13 +94,13 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="th">ID</th>
-                <th class="th">Urun Adi</th>
-                <th class="th">Marka</th>
-                <th class="th">Kategori</th>
-                <th class="th">Fiyat</th>
+                <th class="th" style="cursor: pointer;" onclick="sortTable('Id')">ID @getArrow("id")</th>
+                <th class="th" style="cursor: pointer;" onclick="sortTable('Name')">Urun Adi @getArrow("Name")</th>
+                <th class="th" style="cursor: pointer;" onclick="sortTable('Brand')">Marka @getArrow("Brand")</th>
+                <th class="th" style="cursor: pointer;" onclick="sortTable('Category')">Kategori @getArrow("Category")</th>
+                <th class="th" style="cursor: pointer;" onclick="sortTable('Price')">Fiyat @getArrow("Price")</th>
                 <th class="th">Urun Gorseli</th>
-                <th class="th">Urun Tarihi</th>
+                <th class="th" style="cursor: pointer;" onclick="sortTable('CreatedAt')">Urun Tarihi @getArrow("CreatedAt")</th>
                 <th class="th">Kontrol Grubu</th>
             </tr>
         </thead>
@@ -111,12 +139,14 @@
             //Burda i olarak gondermis olduk Controllerin Icindeki Indexe
             string active = "";
             //Su anki sayfa i ye esitse
-            if(i == pageIndex)
+            if (i == pageIndex)
             {
                 active = "active";
             }
-            <li class="page-item @active"><a class="page-link" asp-route-pageIndex="@i"
-                   asp-route-ara="@ara">@i</a></li>
+            <li class="page-item @active">
+                <a class="page-link" asp-route-pageIndex="@i"
+                   asp-route-ara="@ara" asp-route-column="@column" asp-route-orderBy="@orderBy">@i</a>
+            </li>
         }
     </ul>
 </nav>

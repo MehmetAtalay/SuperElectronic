@@ -3,60 +3,72 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SuperElectronic</title>
+    <title>SuperElectronic</title>
+    <link href="/Icon/icon.jpg" rel="icon" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SuperElectronic.styles.css" asp-append-version="true" />
     <style>
 
 
-        
-        #navlink {
 
+        #navlink {
             height: auto;
             margin: 1px;
-            
             background-blend-mode: color-dodge;
             opacity: 0.80;
             font-size: 20px;
             color: red;
         }
 
-        #navlink:hover {
-             opacity: 1;
-        }
+            #navlink:hover {
+                opacity: 1;
+            }
 
         #text {
             font-family: 'Courier New';
             color: blue;
             font-weight: bold;
             background-color: transparent;
-            opacity:0.8;
+            opacity: 0.8;
         }
 
-        #text:hover {
+            #text:hover {
                 background-color: aquamarine;
                 opacity: 1;
-        }
-       
+            }
     </style>
 </head>
 <body>
     @*header eklencek calismassa yenisi "navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom   box-shadow mb-3" *@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3" id="navbar">
-            <div class="container-fluid">
-                <a class="navbar-brand" id="text" asp-area="" asp-controller="Home" asp-action="Index">SuperElectronic</a>
-               
-                
+            <div class="container">
+                <a class="navbar-brand" id="text" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="/Icon/icon.jpg" alt="..." width="30" class="me-2" /> SuperElectronic</a>
+
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-               
 
-                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <a class="navbar-brand" id="text" asp-area="" asp-controller="Products" asp-action="Index">Urunler</a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" id="text" asp-area="" asp-controller="Products" asp-action="Index">Urunler</a></li>
+                                <li> <a class="dropdown-item" id="text" asp-area="" asp-controller="Home" asp-action="Index">Profil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li> <a class="dropdown-item" id="text" asp-area="" asp-controller="Home" asp-action="Index">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -83,6 +95,7 @@
 
     <footer class="footer text-muted">
         <div class="container">
+            <img src="/Icon/icon.jpg" alt="..." width="30" class="me-2" />
             &copy; 2024 - SuperElectronic - <a asp-area="" asp-controller="Home" asp-action="Privacy">Bize Ulasin</a>
         </div>
     </footer>

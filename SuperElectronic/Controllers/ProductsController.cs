@@ -6,6 +6,7 @@ using SuperElectronic.Models;
 
 namespace SuperElectronic.Controllers
 {
+    [Route ("/Admin/[controller]/{action=Index}/{id?}")]
     public class ProductsController : Controller
     {
         private readonly SuperElectronicDbContext _dbContext;
@@ -20,7 +21,7 @@ namespace SuperElectronic.Controllers
 
         }
         //Urunleri Listeleyen action
-        public async Task<IActionResult> Index(int pageIndex,string? ara)
+        public async Task<IActionResult> Index(int pageIndex,string? ara,string? column , string? orderBy)
         {
             // Order By Descending Yaptimki En son Eklenen Urun en Ustte gozuksun
             IQueryable<Product> query = _dbContext.Products;
@@ -28,11 +29,77 @@ namespace SuperElectronic.Controllers
             {
                 query = query.Where(p =>p.Name.ToLower().Contains(ara));
             }
-            query = query.OrderByDescending(p=>p.Id);
+            query =  query.OrderByDescending(p=>p.Id);
+            //Sorting Yapalim burdada
+            string[] validColumns = ["Id", "Name", "Brand", "Category", "Price", "CreatedAt"];
+            string[] validOrderBy = ["desc", "asc"];
             //Pagination
             if(pageIndex < 1)
             {
                 pageIndex = 1;
+            }
+            if (!validColumns.Contains(column))
+            {
+                column = "Id";
+            }
+            if (!validOrderBy.Contains(orderBy))
+            {
+                orderBy = "desc";
+            }
+            if (column == "Name")
+            {
+                if (orderBy == "asc")
+                {
+                    query = query.OrderBy(p => p.Name);
+                }
+                if (orderBy == "desc")
+                {
+                    query = query.OrderByDescending(p => p.Name);
+                }
+            }
+            else if (column == "Brand")
+            {
+                if (orderBy == "asc")
+                {
+                    query = query.OrderBy(p => p.Brand);
+                }
+                if (orderBy == "desc")
+                {
+                    query = query.OrderByDescending(p => p.Brand);
+                }
+            }
+           else if (column == "Category")
+            {
+                if (orderBy == "asc")
+                {
+                    query = query.OrderBy(p => p.Category);
+                }
+                if (orderBy == "desc")
+                {
+                    query = query.OrderByDescending(p => p.Category);
+                }
+            }
+            else if (column == "Price")
+            {
+                if (orderBy == "asc")
+                {
+                    query = query.OrderBy(p => p.Price);
+                }
+                if (orderBy == "desc")
+                {
+                    query = query.OrderByDescending(p => p.Price);
+                }
+            }
+           else if (column == "CreatedAt")
+            {
+                if (orderBy == "asc")
+                {
+                    query = query.OrderBy(p => p.CreatedAt);
+                }
+                if (orderBy == "desc")
+                {
+                    query = query.OrderByDescending(p => p.CreatedAt);
+                }
             }
             decimal count = query.Count();
             //ToplamSayfa bulmak icin countu page sizea bolduk math ceilingle ona en yakin
@@ -42,6 +109,8 @@ namespace SuperElectronic.Controllers
             var products = await query.ToListAsync();
             ViewData["PageIndex"] = pageIndex;
             ViewData["TotalPages"] = totalPages;
+            ViewData["Column"] = column;
+            ViewData["OrderBy"] = orderBy;
             //Null deilse viewdataya atcaz nullsa bos bir string eklicez
          
             ViewData["Ara"] = ara ?? "";
