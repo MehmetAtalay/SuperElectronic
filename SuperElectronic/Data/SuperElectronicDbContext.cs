@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using SuperElectronic.Models;
 
 namespace SuperElectronic.Data
 {
-    public class SuperElectronicDbContext:DbContext
+    public class SuperElectronicDbContext : IdentityDbContext<ApplicationUser>
     {
         public SuperElectronicDbContext(DbContextOptions dbContextOptions) :base(dbContextOptions)
         {

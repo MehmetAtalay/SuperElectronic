@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperElectronic.Data;
 
@@ -11,9 +12,11 @@ using SuperElectronic.Data;
 namespace SuperElectronic.Migrations
 {
     [DbContext(typeof(SuperElectronicDbContext))]
-    partial class SuperElectronicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241224082311_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

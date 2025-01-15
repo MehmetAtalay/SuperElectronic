@@ -14,7 +14,7 @@ namespace SuperElectronic.Controllers
         {
             _dbcontext = dbContext;
         }
-
+       
         public async Task<IActionResult> Index()
         {
             var product = await _dbcontext.Products.OrderByDescending(x=>x.Id).Take(4).ToListAsync();
