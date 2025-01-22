@@ -27,6 +27,7 @@
 
 
 <head>
+     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
         body {
             background-image: url('/UrunResimleri/dukkanresmi.jpg');
@@ -78,7 +79,7 @@
 <div class="row mb-5">
 
     <div class="col">
-        <a class="btn btn-primary" asp-controller="Products" asp-action="Create">Urun Ekle</a>
+        <a class=" btn btn-create asp-controller="Products" asp-action="Create">Urun Ekle</a>
     </div>
     <div class="col">
         <form asp-controller="Products" asp-action="Index" method="get">

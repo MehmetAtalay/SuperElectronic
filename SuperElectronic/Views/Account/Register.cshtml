@@ -1,0 +1,122 @@
+﻿@model RegisterDto
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_RegisterLayout.cshtml";
+}
+@* <div class="row">
+    <div class="col-lg-6 mx-auto rounded border p-4">
+        <h2 class="text-center mb-3">Kayit Ol</h2>
+        <hr />
+        <form method="post" asp-controller="Account" asp-action="Register">
+            <label class="col-sm-4 col-form-label">Isim</label>
+            <div class="col-sm-8">
+                <input class="form-control" asp-for="FirstName" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div> *@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+    <style>
+        .rowo {
+            display: flex;
+            width: 100%; /*Optional*/
+        }
+    </style>
+</head>
+
+
+
+
+<div class="bg">
+</div>
+
+
+<div class="rowo">
+
+    <main class="form-signin">
+        <form method="post" asp-controller="Account" asp-action="Register">
+            <h1 class="h3">
+
+                @*    <a class="h3" style="text-decoration:none; color:#fff;"
+                asp-controller="Home" asp-action="Index">Ana Sayfa</a> *@
+                <a class="w-100 btn btn-lg" style="text-decoration:none; color:#fff;" asp-controller="Home" asp-action="Index">Ana Sayfaya Don</a>
+
+            </h1>
+            <h1 class="h3">Kaydol</h1>
+
+
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div class="form-floating">
+                @*     <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                <label for="floatingInput">Email address</label> *@
+                <input class="form-control" asp-for="FirstName" id="floatingInput" placeholder="Isminizi Yaziniz" />
+                <label for="floatingInput">Adiniz</label>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" asp-for="LastName" id="floatingInput" placeholder="Soyadinizi Yaziniz" />
+                <label for="floatingInput">Soyadiniz</label>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" asp-for="Email" id="floatingInput" placeholder="Email" />
+                <label for="floatingInput">Emailiniz</label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" asp-for="PhoneNumber" id="floatingInput" placeholder="TelefonNumarasi" />
+                <label for="floatingInput">Telefon Numaraniz</label>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" asp-for="Address" id="floatingInput" placeholder="Adresiniz" />
+                <label for="floatingInput">Adresiniz</label>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" asp-for="Password" id="floatingInput" placeholder="Sifre Giriniz" />
+                <label for="floatingInput">Sifre</label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" asp-for="ConfirmPassword" id="floatingInput" placeholder="Sifre Dogrulama" />
+                <label for="floatingInput">Sifre Dogrulama</label>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            @*   <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+            <label for="floatingPassword">Password</label>
+            </div> *@
+
+            <div class="checkbox mb-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" value="1" name="remember_me" id="rememberMeSwitch">
+                    <label class="form-check-label" for="rememberMeSwitch"> Remember me</label>
+                </div>
+
+            </div>
+            @* <button class="w-100 btn btn-lg" type="submit">Sign in</button> *@
+            @* <a class="w-100  btn btn-lg" style="text-decoration:none; color:#fff; height:auto;max-height:50px;" asp-controller="Home" asp-action="Index">Giris Yap</a> *@
+            <button class="w-100  btn btn-lg" style="text-decoration:none; color:#fff; height:auto;max-height:50px; margin-top:5px;" type="submit">Kaydol</button>
+            @* <div class="container" style="display:flex">
+            <a class="w-100 btn btn-lg" style="text-decoration:none; color:#fff;" asp-controller="Home" asp-action="Index">Giris Yap</a>
+            <a class="w-100 btn btn-lg" style="text-decoration:none;margin-left:15px;  color:#fff;" asp-controller="Home" asp-action="Index">Kaydol</a>
+            </div> *@
+
+        </form>
+
+    </main>
+</div>
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+

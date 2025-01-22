@@ -8,52 +8,55 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SuperElectronic.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
     <style>
         body{
             background-color:azure;
         }
     </style>
 </head>
-<div class="row">
+<div class="row" >
     @* column , center borderi rounded text centerda olsun bottom marginide m-5 olsun paddingide p-3 *@
-    <div class="col-md-8 mx-auto rounded border p-3">
+    <div class="col-md-8 mx-auto rounded border p-3" >
         <h2 class="text-center mb-5">Detay </h2>
 
         @* enctype multipart/form data kullandim resimde eklencegi icin*@
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" >
             <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Id</label>
+                <label class="col-sm-4 col-form-label" id="Detay-Liste">Id</label>
                 <div class="col-sm-8">
-                    <input class="form-control-plaintext" readonly value="@ViewData["ProductId"]">
+                    <input class="form-control-plaintext" id="Detay-Aciklama" readonly value="@ViewData["ProductId"]">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Isim</label>
+                <label class="col-sm-4 col-form-label" id="Detay-Liste">Isim</label>
                 <div class="col-sm-8">
-                    <input class="form" asp-for="Name">
+                    <input class="form-control-plaintext" id="Detay-Aciklama" asp-for="Name">
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Marka</label>
+                <label class="col-sm-4 col-form-label" id="Detay-Liste">Marka</label>
                 <div class="col-sm-8">
-                    <input class="form-control" asp-for="Brand">
+                    <input class="form-control-plaintext" id="Detay-Aciklama" asp-for="Brand">
                     <span asp-validation-for="Brand" class="text-danger"></span>
                 </div>
             </div>
             
             <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Fiyat</label>
+                <label class="col-sm-4 col-form-label" id="Detay-Liste">Fiyat</label>
                 <div class="col-sm-8">
-                    <input class="form-control" asp-for="Price">
+                    <input class="form-control-plaintext" id="Detay-Aciklama" asp-for="Price">
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Aciklama</label>
+                <div class="col-sm-4 col-form-label" id="Detay-Liste-Description">Aciklama</div>
                 <div class="col-sm-8">
-                    <textarea class="form-control" asp-for="Description"></textarea>
+                    <textarea class="form-control-plaintext" id="Detay-Aciklama" asp-for="Description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>
@@ -63,19 +66,20 @@
                 </div>
 
             </div>
-            <div class="row mb-3">
+           @*  <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Image</label>
                 <div class="col-sm-8">
-                    <input class="form-control" asp-for="ImageFile">
+                    <input class="form-control-plaintext" asp-for="ImageFile">
                     <span asp-validation-for="ImageFile" class="text-danger"></span>
                 </div>
-            </div>
+            </div> *@
             <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Olusturulma Tarihi</label>
+                <label class="col-sm-4 col-form-label" id="Detay-Liste">Olusturulma Tarihi</label>
                 <div class="col-sm-8">
-                    <input class="form-control-plaintext" readonly value="@ViewData["CreatedAt"]">
+                    <input class="form-control-plaintext" id="Detay-Aciklama" readonly value="@ViewData["CreatedAt"]">
                 </div>
-            </div><div class="row">
+            </div>
+            <div class="row">
                 
                 <div class="col-sm-4 d-grid">
                     @*Cancel Buttonuna tikladigimizda bizi  direk indexe aticak*@
