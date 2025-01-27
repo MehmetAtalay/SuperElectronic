@@ -116,12 +116,12 @@
                     <td>@(product.Price)₺</td>
                     <td><img src="/UrunResimleri/@product.ImageFileName" width="100" /></td>
                     <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
-                    <td style="flex-wrap:wrap">
-                        <a class="btn btn-primary btn-sm" asp-controller="Products" asp-action="Duzenle"
+                    <td style="white-space:nowrap">
+                        <a class="btn button-87" asp-controller="Products" asp-action="Duzenle"
                            asp-route-id="@product.Id">Guncelle</a>
 
 
-                        <a class="btn btn-danger   btn-sm" asp-controller="Products" asp-action="SilmeSayfasi"
+                        <a class="btn button-87" asp-controller="Products" asp-action="SilmeSayfasi"
                            asp-route-id="@product.Id">Sil</a>
 
                     </td>

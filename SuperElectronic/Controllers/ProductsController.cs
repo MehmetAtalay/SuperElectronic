@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SuperElectronic.Data;
@@ -6,35 +8,42 @@ using SuperElectronic.Models;
 
 namespace SuperElectronic.Controllers
 {
-    [Route ("/Admin/[controller]/{action=Index}/{id?}")]
+    [Route("/Admin/[controller]/{action=Index}/{id?}")]
     public class ProductsController : Controller
     {
         private readonly SuperElectronicDbContext _dbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly int pageSize = 5;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ProductsController(SuperElectronicDbContext dbContext,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager)
         {
             this._dbContext = dbContext;
             _webHostEnvironment = webHostEnvironment;
+            this._signInManager = signInManager;
+            this._userManager = userManager;
 
         }
+
         //Urunleri Listeleyen action
-        public async Task<IActionResult> Index(int pageIndex,string? ara,string? column , string? orderBy)
+        public async Task<IActionResult> Index(int pageIndex, string? ara, string? column, string? orderBy)
         {
             // Order By Descending Yaptimki En son Eklenen Urun en Ustte gozuksun
             IQueryable<Product> query = _dbContext.Products;
             if (ara != null)
             {
-                query = query.Where(p =>p.Name.ToLower().Contains(ara));
+                query = query.Where(p => p.Name.ToLower().Contains(ara));
             }
-            query =  query.OrderByDescending(p=>p.Id);
+            query = query.OrderByDescending(p => p.Id);
             //Sorting Yapalim burdada
             string[] validColumns = ["Id", "Name", "Brand", "Category", "Price", "CreatedAt"];
             string[] validOrderBy = ["desc", "asc"];
             //Pagination
-            if(pageIndex < 1)
+            if (pageIndex < 1)
             {
                 pageIndex = 1;
             }
@@ -68,7 +77,7 @@ namespace SuperElectronic.Controllers
                     query = query.OrderByDescending(p => p.Brand);
                 }
             }
-           else if (column == "Category")
+            else if (column == "Category")
             {
                 if (orderBy == "asc")
                 {
@@ -90,7 +99,7 @@ namespace SuperElectronic.Controllers
                     query = query.OrderByDescending(p => p.Price);
                 }
             }
-           else if (column == "CreatedAt")
+            else if (column == "CreatedAt")
             {
                 if (orderBy == "asc")
                 {
@@ -104,18 +113,18 @@ namespace SuperElectronic.Controllers
             decimal count = query.Count();
             //ToplamSayfa bulmak icin countu page sizea bolduk math ceilingle ona en yakin
             //sayiyi atadik totalpagese
-            int totalPages =(int) Math.Ceiling(count / pageSize);
-            query = query.Skip((pageIndex-1)*pageSize).Take(pageSize);
+            int totalPages = (int)Math.Ceiling(count / pageSize);
+            query = query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
             var products = await query.ToListAsync();
             ViewData["PageIndex"] = pageIndex;
             ViewData["TotalPages"] = totalPages;
             ViewData["Column"] = column;
             ViewData["OrderBy"] = orderBy;
             //Null deilse viewdataya atcaz nullsa bos bir string eklicez
-         
+
             ViewData["Ara"] = ara ?? "";
             return View(products);
-           
+
 
         }
         //Urun olusturmak icin olan Action Adi Buton Adi Yeni urune bastigimizda bizi forma yonlendiren
@@ -124,7 +133,6 @@ namespace SuperElectronic.Controllers
 
         public async Task<IActionResult> Create()
         {
-
             return View();
         }
         // Bir post methodu oldugu icin HTTPPOST ekledim
@@ -132,6 +140,7 @@ namespace SuperElectronic.Controllers
         [HttpPost]
         //FromForm ile verinin form verisi kullanilarak post ediliceginide ayrica belirttim.
         //Bu method sonra gerekirse async yapilacak
+
         public async Task<IActionResult> Create([FromForm] ProductDTO productDTO)
         {
             // Bu validationu model icinde yapmadim , cunku dosyanin image olup olmadina client side validation atamak
@@ -139,7 +148,7 @@ namespace SuperElectronic.Controllers
             // gercekten image olduguna dairde bir validasyon atarim.
             if (productDTO.ImageFile == null)
             {
-                
+
                 ModelState.AddModelError("ImageFile", "Bir resim yukleyiniz lutfen");
             }
             if (!ModelState.IsValid)
@@ -280,7 +289,7 @@ namespace SuperElectronic.Controllers
         public async Task<IActionResult> Detay(int id)
         {
             var product = await _dbContext.Products.FindAsync(id);
-            if (product == null) 
+            if (product == null)
             {
                 RedirectToAction("Index", "Home");
             }

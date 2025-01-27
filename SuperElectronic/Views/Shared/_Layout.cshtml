@@ -55,22 +55,56 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
+                @* Bunlari enjekte etmemiz gerekti kullanabilmemiz icin Fakat Bunlar
+                    Identiy Oldugu icin using ile Identity ekledik sonra dierlerini enjekte ettik
+                *@
+                    @using Microsoft.AspNetCore.Identity
+                    @inject SignInManager<ApplicationUser> SignInManager
+                    @inject UserManager<ApplicationUser> UserManager
+                    @*Burda kullanici varmi diye once IsSignedIn ile sign olmus kullanici varmi diye baktik
+                        ondan sonra role adminmi diye baktik
+                    *@
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    var user = await UserManager.GetUserAsync(User);
+                    if (User.IsInRole("admin"))
+                    {
 
-               
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @(user!.FirstName + " " + user.LastName + "(Admin)")
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item " id="text" asp-area="" asp-controller="Products" asp-action="Index">Urunler</a></li>
+                                    <li> <a class="dropdown-item" id="text" asp-area="" asp-controller="Home" asp-action="Index">Profil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li> <a class="dropdown-item" id="text" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                    
+                                </ul>
+                            </li>
+                        </ul>
+                       
+                    }
+                    else if (User.IsInRole("client"))
+                    {
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @(user!.FirstName + " " + user.LastName + "(Client)")
+                                </a>
+                                <ul class="dropdown-menu">
+                              
+                                    <li> <a class="dropdown-item" id="text" asp-area="" asp-controller="Home" asp-action="Index">Profil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li> <a class="dropdown-item logout" id="text" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    }
+                }
+                
                   
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Admin
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" id="text" asp-area="" asp-controller="Products" asp-action="Index">Urunler</a></li>
-                                <li> <a class="dropdown-item" id="text" asp-area="" asp-controller="Home" asp-action="Index">Profil</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li> <a class="dropdown-item" id="text" asp-area="" asp-controller="Home" asp-action="Index">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="btn btn-outline-primary me-2" asp-area="" asp-controller="Account" asp-action="Register">Kaydol</a>
@@ -80,7 +114,7 @@
                         </li>
 
                     </ul>
-               
+              
           </div>
             
         </nav>
@@ -115,5 +149,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+  
 </body>
 </html>

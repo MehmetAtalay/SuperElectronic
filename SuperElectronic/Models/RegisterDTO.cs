@@ -11,19 +11,19 @@ namespace SuperElectronic.Models
         [Required(ErrorMessage = "Lutfen Bir Soyisim giriniz"), MaxLength(100)]
         public string LastName { get; set; } = "";
 
-        [Required, EmailAddress, MaxLength(100)]
+        [Required(ErrorMessage ="Lutfen gecerli bir email adresi giriniz"), EmailAddress, MaxLength(100)]
         public string Email { get; set; } = "";
 
         [Required(ErrorMessage = "Lutfen Bir Telefon Numarasi Giriniz"), MaxLength(20)]
-        [RegularExpression
-        ((@"^(\+\d{1, 2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$"),
-        ErrorMessage = "Gecerli Numara Giriniz Lutfen")]
+        //[RegularExpression
+        //((@"^(\+\d{1, 2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$"),
+        //ErrorMessage = "Gecerli Numara Giriniz Lutfen")]
         public string? PhoneNumber { get; set; }
 
-        [Required, MaxLength(200)]
+        [Required(ErrorMessage ="Lutfen Bir Adres Giriniz"), MaxLength(200)]
         public string Address { get; set; } = "";
 
-        [Required, MaxLength(100)]
+        [Required(ErrorMessage ="Lutfen Bir Sifre Giriniz"), MaxLength(50)]
         public string Password { get; set; } = "";
 
         [Required(ErrorMessage = "Pasaportu Onaylamaniz Gereklidir")]
