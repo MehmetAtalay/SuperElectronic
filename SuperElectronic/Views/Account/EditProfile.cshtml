@@ -1,0 +1,71 @@
+﻿@model UserProfileDTO
+
+
+<div class="row">
+    @* column , center borderi rounded text centerda olsun bottom marginide m-5 olsun paddingide p-3 *@
+    <div class="col-md-8 mx-auto rounded border p-3">
+        <h2 class="text-center mb-5">Guncelle</h2>
+
+        @* enctype multipart/form data kullandim resimde eklencegi icin*@
+        <form method="post" asp-action="EditProfile"  asp-controller="Account">
+            
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label" id="lb">Isim</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="FirstName">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label" id="lb">Marka</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="LastName">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+          
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label" id="lb">Fiyat</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label" id="lb">Telefon Numarasi</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="PhoneNumber">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+         
+           @*  <div class="row mb-3">
+                <label class="col-sm-4 col-form-label" id="lb">Urun resmi</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="ImageFile">
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+            </div> *@
+          @*   <div class="row mb-3">
+                <label class="col-sm-4 col-form-label" id="lb">Olusturulma Tarihi</label>
+                <div class="col-sm-8">
+                    <input class="form-control-plaintext" readonly value="@ViewData["CreatedAt"]">
+                </div>
+            </div> *@
+
+            <div class="row">
+                <div class="offset-sm-4 col-sm-4 d-grid">
+                    <button type="submit" class="btn btn-primary">Guncelle</button>
+                </div>
+                <div class="col-sm-4 d-grid">
+                    @*Cancel Buttonuna tikladigimizda bizi  direk indexe aticak*@
+                    <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Profile" role="button">
+                        Vazgec
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

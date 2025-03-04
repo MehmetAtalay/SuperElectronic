@@ -27,12 +27,17 @@
 
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
      <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+     <meta name="view-transition" content="same-origin">
     <style>
         body {
             background-image: url('/UrunResimleri/dukkanresmi.jpg');
             background-size: cover;
-            background-position: center;
+            
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+           
         }
 
         tbody {
@@ -79,7 +84,8 @@
 <div class="row mb-5">
 
     <div class="col">
-        <a class=" btn btn-create asp-controller="Products" asp-action="Create">Urun Ekle</a>
+        
+        <a class="btn btn-create "asp-controller="Products" asp-action="Create">Urun Ekle</a>
     </div>
     <div class="col">
         <form asp-controller="Products" asp-action="Index" method="get">

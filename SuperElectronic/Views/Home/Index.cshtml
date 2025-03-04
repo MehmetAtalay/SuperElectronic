@@ -2,12 +2,21 @@
 @{
     ViewData["Title"] = "Home Page";
     ViewData["HomePage"] = true;
-    
+    string ara = (string)ViewData["Ara"]!;
+    int pageIndex = (int)ViewData["PageIndex"]!;
+    int totalPages = (int)ViewData["TotalPages"]!;
+
 }
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SuperElectronic.styles.css" asp-append-version="true" />
+    <style>
+        table {
+            border-collapse: separate;
+            border-spacing: 10px 5px;
+        }
+    </style>
 </head>
 
 <div style="background-color: #08618d;">
@@ -16,8 +25,8 @@
             <div class="col-md-6">
                 <h1 class="mb-5 display-2"><strong>SuperElectronic</strong></h1>
                 <p>
-                    En uygun fiyatli,En kaliteli Urunler icin SuperElectronic 
-                    
+                    En uygun fiyatli,En kaliteli Urunler icin SuperElectronic
+
                 </p>
             </div>
             <div class="col-md-6 text-center" style="backface-visibility:hidden">
@@ -31,8 +40,55 @@
 <div class="bg-light">
     <div class="container py-4">
         <h2 class="pb-4 text-center">Newest Products</h2>
+        <div style="width: 100%; display: table;">
+            <div style="display: table-row">
+                <div style="width: 50px; display: table-cell;">
+                    Sayfa
+                </div>
+                <div style="display: table-cell;">
 
+                    <ul class="pagination">
+                        @for (int i = 1; i <= totalPages; i++)
+                        {
+                            //PageIndex routesi i de gelen deger Controllerin icindeki pageIndex degerini
+                            //Burda i olarak gondermis olduk Controllerin Icindeki Indexe
+                            string active = "";
+                            //Su anki sayfa i ye esitse
+                            if (i == pageIndex)
+                            {
+                                active = "active";
+                            }
+                            <li class="page-item @active">
+                                <a class="page-link" asp-route-pageIndex="@i"
+                                   asp-route-ara="@ara">@i</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <form asp-controller="Home" asp-action="Index" method="get">
+                    <div style="display:table-cell; ">
+                        <a class="btn btn-primary" asp-controller="Products" asp-action="Index">Urunlere Geri Don</a>
+                    </div>
+                    <div style="display:table-cell;">
+                        <button class="btn btn-outline-success my-2 my-sm-0" id="search" type="submit">Ara</button>
+                    </div>
+                    <div style="display:table-cell;">
+                        <input class="form-control mr-sm-2" type="search" name="ara" value="@ara" placeholder="Urun Ismiyle Ara" aria-label="Search">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                11
+            </div>
+            <div class="col">
+                22
+            </div>
+
+        </div>
         <div class="row mb-5 g-3">
+
             @foreach (var product in Model)
             {
                 <div class="col-lg-3 col-md-6">
@@ -47,13 +103,68 @@
                         <h4 class="mb-3">@(product.Price)₺</h4>
                         <a class="btn btn-primary btn-sm mb-2" asp-controller="Products"
                            asp-action="Detay" asp-route-id="@product.Id" role="button">Detay</a>
-                        
+                    @using Microsoft.AspNetCore.Identity
+                    @inject SignInManager<ApplicationUser> SignInManager
+                    @inject UserManager<ApplicationUser> UserManager
+                        @*Burda kullanici varmi diye once IsSignedIn ile sign olmus kullanici varmi diye baktik
+                        ondan sonra role adminmi diye baktik
+                    *@ 
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            if (User.IsInRole("admin"))
+                            {
+                                <a class="btn btn-warning btn-sm mb-2" asp-controller="Products"
+                                   asp-action="Duzenle" asp-route-id="@product.Id" role="button" onclick="confirm();">Ürünü Düzenle</a>
+                                <a class="btn btn-primary btn-sm mb-2" asp-controller="Store" asp-action="SepeteEkle" asp-route-id="@product.Id"
+                                   role="button">Sepete Ekle</a>
+                                @* <a class="btn btn-danger btn-sm mb-2" asp-controller="Products" 
+                                    asp-action="SilmeSayfasi" asp-route-id="@product.Id" role="button" >Ürünü Sil</a> *@
+                                    
+                            }
+
+                        }
+
+
                     </div>
                 </div>
             }
         </div>
+        <div style="width: 100%; display: table;">
+            <div style="display: table-row">
+                <div style="width: 50px; display: table-cell;"> Sayfa </div>
+                <div style="display: table-cell;">
+                    <div>
+                        <ul class="pagination">
+                            @for (int i = 1; i <= totalPages; i++)
+                            {
+                                //PageIndex routesi i de gelen deger Controllerin icindeki pageIndex degerini
+                                //Burda i olarak gondermis olduk Controllerin Icindeki Indexe
+                                string active = "";
+                                //Su anki sayfa i ye esitse
+                                if (i == pageIndex)
+                                {
+                                    active = "active";
+                                }
+                                <li class="page-item @active">
+                                    <a class="page-link" asp-route-pageIndex="@i"
+                                       asp-route-ara="@ara">@i</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<nav>
+
+</nav>
+<script>
+    function confirm(){
+        alert("Are you sure ");
+    }
+</script>
 <script src="~/js/AnimationStorage.js"></script>
 
 <script src="~/js/Logout.js"></script>

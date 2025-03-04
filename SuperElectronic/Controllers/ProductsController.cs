@@ -8,6 +8,7 @@ using SuperElectronic.Models;
 
 namespace SuperElectronic.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("/Admin/[controller]/{action=Index}/{id?}")]
     public class ProductsController : Controller
     {
@@ -30,6 +31,7 @@ namespace SuperElectronic.Controllers
         }
 
         //Urunleri Listeleyen action
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int pageIndex, string? ara, string? column, string? orderBy)
         {
             // Order By Descending Yaptimki En son Eklenen Urun en Ustte gozuksun
@@ -286,6 +288,8 @@ namespace SuperElectronic.Controllers
             return RedirectToAction("Index", "Products");
 
         }
+        //Admin olmayanlar detay sayfasini kullanabilsin
+        [AllowAnonymous]
         public async Task<IActionResult> Detay(int id)
         {
             var product = await _dbContext.Products.FindAsync(id);
@@ -300,8 +304,8 @@ namespace SuperElectronic.Controllers
                 Price = product.Price,
                 Category = product.Category,
                 Description = product.Description,
-
             };
+
             ViewData["ProductId"] = product.Id;
             ViewData["ImageFileName"] = product.ImageFileName;
             ViewData["CreatedAt"] = product.CreatedAt.ToString("MM/dd/yyyy");

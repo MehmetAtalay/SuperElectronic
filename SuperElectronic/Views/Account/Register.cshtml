@@ -39,7 +39,8 @@
 <div class="rowo">
 
     <main class="form-signin">
-        <form method="post" asp-controller="Account" asp-action="Register">
+        @*Auto Complete simdilik On kalsin cunku test ederken bazi seyleri tekrar tekrar yazmak istemiyorum*@
+        <form method="post" asp-controller="Account" asp-action="Register" autocomplete="on">
             <h1 class="h3">
 
                 @*    <a class="h3" style="text-decoration:none; color:#fff;"
@@ -94,13 +95,7 @@
             <label for="floatingPassword">Password</label>
             </div> *@
 
-            <div class="checkbox mb-3">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" value="1" name="remember_me" id="rememberMeSwitch">
-                    <label class="form-check-label" for="rememberMeSwitch"> Remember me</label>
-                </div>
-
-            </div>
+           
             @* <button class="w-100 btn btn-lg" type="submit">Sign in</button> *@
             @* <a class="w-100  btn btn-lg" style="text-decoration:none; color:#fff; height:auto;max-height:50px;" asp-controller="Home" asp-action="Index">Giris Yap</a> *@
             <button class="w-100  btn btn-lg" style="text-decoration:none; color:#fff; height:auto;max-height:50px; margin-top:5px;" type="submit">Kaydol</button>

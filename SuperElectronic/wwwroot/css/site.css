@@ -1,7 +1,24 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
-
+:root {
+    --login-alert-background-image: radial-gradient(circle at 30% 86%, rgba(255,255,255,0.03) 0%,
+    rgba(255,255,255,0.03) 8%,transparent 8%, transparent 92%), radial-gradient(circle at 55% 100%,
+    rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 8%,transparent 8%, transparent 92%), 
+        radial-gradient(circle at 40% 75%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 
+    6%,transparent 6%, transparent 94%), radial-gradient(circle at 7% 99%, rgba(255,255,255,0.03) 0%,
+    rgba(255,255,255,0.03) 6%,transparent 6%, transparent 94%), radial-gradient(circle at 69% 76%, 
+    rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 6%,transparent 6%, transparent 94%), 
+        radial-gradient(circle at 2% 35%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03)
+    6%,transparent 6%, transparent 94%), radial-gradient(circle at 14% 48%, rgba(255,255,255,0.03) 0%, 
+    rgba(255,255,255,0.03) 6%,transparent 6%, transparent 94%), radial-gradient(circle at 28% 87%, 
+    rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 4%,transparent 4%, transparent 96%), 
+        radial-gradient(circle at 65% 14%, rgba(255,255,255,0.04) 0%, 
+    rgba(255,255,255,0.04) 4%,transparent 4%, transparent 96%), radial-gradient(circle at 51% 36%, 
+    rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 4%,transparent 4%, transparent 96%), 
+        radial-gradient(circle at 6% 93%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 4%,transparent 4%, 
+    transparent 96%), linear-gradient(135deg, rgb(23, 233, 173),rgb(29, 24, 208));
+}
 
 html {
     font-size: 14px;
@@ -47,11 +64,25 @@ body {
         transform :translateY(0);
     }
 }
-.btn-create{
-    background-color:#fff;
-    color:#777;
-    border-radius:15px;
-    margin-left:15px;
+.btn-create {
+    margin: 4px;
+    padding: 4px 6px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: blue;
+    border-radius: 10px;
+    display: inline-block;
+    border: 0px;
+    font-weight: 700;
+    box-shadow: 0px 0px 14px -7px #f09819;
+    background-image: linear-gradient(45deg, #FF512F 0%, #F09819 51%, #FF512F 100%);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    background-position: right;
 }
 .btn-create:hover{
     transform:translateY(-3px);
@@ -104,3 +135,32 @@ body {
         background-position: right;
     }
 
+.rowo {
+    display: flex;
+    width: 100%; /*Optional*/
+}
+/* The alert message box */
+.loginalert {
+    text-align:center;
+    padding: 20px;
+    background-image: var(--login-alert-background-image);
+    color: white;
+    margin-bottom:2px;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+        color: black;
+    }

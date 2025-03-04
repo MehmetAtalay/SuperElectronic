@@ -1,0 +1,24 @@
+﻿@model UserProfileDTO
+@{
+    var userRole = ViewData["userRole"];
+}
+<h1>
+    
+    @Model.FirstName
+</h1>
+<h2>
+    @Model.LastName
+</h2>
+<h3>
+    @Model.Email
+</h3>
+<h4>
+    @Model.PhoneNumber
+</h4>
+<h4 >
+    @userRole
+</h4>
+<div flex="grid">
+    <a style="column-count:1" class="btn btn-sm btn-warning" asp-action="EditProfile" asp-controller="Account">Profili Düzenle</a>
+    <a style="column-count:2" class="btn btn-sm btn-danger" asp-controller="Account"  asp-action="ChangePassword">Şifreyi Deiştir</a>
+</div>

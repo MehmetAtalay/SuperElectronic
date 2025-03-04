@@ -1,8 +1,10 @@
 using FluentValidation;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SuperElectronic.Data;
 using SuperElectronic.Models;
+using SuperElectronic.Validators;
 
 namespace SuperElectronic
 {
@@ -10,8 +12,11 @@ namespace SuperElectronic
     {
         public static async Task Main(string[] args)
         {
+            
             var builder = WebApplication.CreateBuilder(args);
+            
             //Http Client Factory
+
             builder.Services.AddHttpClient();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -24,6 +29,7 @@ namespace SuperElectronic
             });
             //ApplicationUser bizim olusturdugumuz model.
             //Identity servislerini servise ekledik
+           
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -35,8 +41,15 @@ namespace SuperElectronic
             .AddEntityFrameworkStores<SuperElectronicDbContext>();
 
             
+    
             var app = builder.Build();
-
+            app.UseStatusCodePages(async options => {
+            
+            if(options.HttpContext.Response.StatusCode == 404)
+                {
+                    options.HttpContext.Response.Redirect("/ErrorPages/ErrorPage404");
+                }
+            });
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -49,12 +62,13 @@ namespace SuperElectronic
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            
             using (var scope = app.Services.CreateScope()) 
             {
                 var userManager = scope.ServiceProvider.GetService(typeof(UserManager<ApplicationUser>))
